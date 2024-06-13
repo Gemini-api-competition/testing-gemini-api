@@ -15,7 +15,7 @@ This project demonstrates how to securely use the Google AI Gemini API by handli
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/yourusername/google-ai-gemini-example.git
+   git clone https://github.com/Gemini-api-competition/testing-gemini-api.git
    cd testing-gemini-api
    npm install
    

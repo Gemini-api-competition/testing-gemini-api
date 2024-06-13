@@ -1,24 +1,27 @@
 const express = require("express");
-const axios = require("axios");
 const app = express();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const API_KEY = "";
 app.use(express.json());
+const API_KEY = process.env.API_KEY;
+const genAI = new GoogleGenerativeAI(API_KEY);
+
 app.post("/api/gemini", async (req, res) => {
   try {
     const { input } = req.body;
-    const response = await axios.post("https://api.google.com/ai/gemini", {
-      input: input,
-      key: API_KEY,
-    });
-    res.json(response.data);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const result = await model.generateContent(input);
+    const response = await result.response;
+    const text = response.text();
+
+    res.json({ text: text });
   } catch (error) {
     console.error("Error calling Google AI Gemini API:", error);
     res.status(500).send("Error calling Google AI Gemini API");
   }
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(4000, () => {
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

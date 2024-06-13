@@ -24,7 +24,7 @@
       async function callGeminiAPI() {
         const input = document.getElementById("input").value;
         try {
-          const response = await fetch("/api/gemini", {
+          const response = await fetch("http://127.0.0.1:8000/api/gemini", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -37,11 +37,7 @@
           }
 
           const data = await response.json();
-          document.getElementById("output").textContent = JSON.stringify(
-            data,
-            null,
-            2
-          );
+          document.getElementById("output").textContent = data.text;
         } catch (error) {
           console.error("Error calling API:", error);
           document.getElementById("output").textContent = "Error calling API";
